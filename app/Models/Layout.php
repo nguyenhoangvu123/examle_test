@@ -23,7 +23,7 @@ class Layout extends Model
          2 => 'landscape'
     ];
 
-    public function Categories() : BelongsToMany
+    public function categories() : BelongsToMany
     {
         return $this->belongsToMany(
             Category::class,

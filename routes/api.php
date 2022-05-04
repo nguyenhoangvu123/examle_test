@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthApiController;
+use App\Http\Controllers\Category\CategoryApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +17,13 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/login', [AuthApiController::class, 'login']);
 Route::group(['middleware' => 'auth:sanctum'], function(){  
-    
+    // Category Strore //
+    Route::group(['prefix' => 'category'], function () {
+        Route::get('/', [CategoryApiController::class, 'index']);
+        Route::post('/store', [CategoryApiController::class, 'store']);
+        Route::get('/{id}', [CategoryApiController::class, 'show']);
+        Route::put('/update/{id}', [CategoryApiController::class, 'update']);
+        Route::delete('/delete/{id}', [CategoryApiController::class, 'delete']);
+
+    });
 });
