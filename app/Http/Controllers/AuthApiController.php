@@ -19,10 +19,10 @@ class AuthApiController extends BaseApiController
                 $this->authService->login($request)
             );
         } catch (\Exception $exception) {
-           
+            $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
             return $this->setMessage($exception
                 ->getMessage())
-                ->sendDataError('', $exception->getStatusCode());
+                ->sendDataError('', $statusCode);
         }
     }
 }

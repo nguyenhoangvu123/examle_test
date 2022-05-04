@@ -40,4 +40,10 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             ]);
         }
     }
+
+    public function getAllCategory($limt = null ) {
+        $result = $this->model->orderBy('id', 'DESC')
+                              ->paginate($limt);
+        return $result;
+    } 
 }

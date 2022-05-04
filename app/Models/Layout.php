@@ -18,6 +18,7 @@ class Layout extends Model
         'preview',
         'orientation'
     ];
+    const FILE_PATH_LAYOUT = 'public/layout';
     const TYPE_ORIENTATION = [
          1 => 'portrait',
          2 => 'landscape'
@@ -28,8 +29,8 @@ class Layout extends Model
         return $this->belongsToMany(
             Category::class,
             'category_layout',
-            'category_id',
-            'layout_id'
+            'layout_id',
+            'category_id'
         );
     }
 }

@@ -1,41 +1,40 @@
 <?php
 
-namespace App\Http\Controllers\Category;
+namespace App\Http\Controllers\Layout;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Services\Category\CategoryService;
+use App\Services\Layout\LayoutService;
 use App\Http\Controllers\BaseApiController;
-use App\Http\Requests\Category\StoreCatoryRequest;
-use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Http\Requests\Layout\StoreLayoutRequest;
+use App\Http\Requests\Layout\UpdateLayoutRequest;
 
-class CategoryApiController extends BaseApiController
+class LayoutApiController extends BaseApiController
 {
-    protected $categoryService;
-    public function __construct(CategoryService $categoryService)
+    protected $layoutService;
+    public function __construct(LayoutService $layoutService)
     {
-        $this->categoryService = $categoryService;
+        $this->layoutService = $layoutService;
     }
 
     public function index(Request $request)
     {
         try {
             return $this->sendDataSuccess(
-                $this->categoryService->index($request)
+                $this->layoutService->index($request)
             );
         } catch (\Exception $exception) {
-             $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
+            $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
             return $this->setMessage($exception
                 ->getMessage())
                 ->sendDataError('', $statusCode);
         }
     }
 
-    public function store(StoreCatoryRequest $request)
+    public function store(StoreLayoutRequest $request)
     {
         try {
             return $this->sendDataSuccess(
-                $this->categoryService->store($request)
+                $this->layoutService->store($request)
             );
         } catch (\Exception $exception) {
             $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
@@ -49,7 +48,7 @@ class CategoryApiController extends BaseApiController
     {
         try {
             return $this->sendDataSuccess(
-                $this->categoryService->show($id)
+                $this->layoutService->show($id)
             );
         } catch (\Exception $exception) {
             $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
@@ -59,24 +58,25 @@ class CategoryApiController extends BaseApiController
         }
     }
 
-    public function update(UpdateCategoryRequest $request, $id)
+    public function update(UpdateLayoutRequest $request, $id)
     {
         try {
             return $this->sendDataSuccess(
-                $this->categoryService->update($request, $id)
+                $this->layoutService->update($id, $request)
             );
         } catch (\Exception $exception) {
             $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
             return $this->setMessage($exception
                 ->getMessage())
-                ->sendDataError('',$statusCode);
+                ->sendDataError('', $statusCode);
         }
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         try {
             return $this->sendDataSuccess(
-                $this->categoryService->delete($id)
+                $this->layoutService->delete($id)
             );
         } catch (\Exception $exception) {
             $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
