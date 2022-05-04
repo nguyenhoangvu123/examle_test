@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Layout;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -47,8 +48,8 @@ class User extends Authenticatable
         return $this->belongsToMany(
             Layout::class,
             'layout_user',
-            'layout_id',
-            'user_id'
-        );
+            'user_id',
+            'layout_id'
+        )->wherePivot('type');
     }
 }

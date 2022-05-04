@@ -24,6 +24,11 @@ class Layout extends Model
          2 => 'landscape'
     ];
 
+    const TYPE_USER_LAYOUT = [
+       'view' => 1,
+       'like' => 2
+    ];
+
     public function categories() : BelongsToMany
     {
         return $this->belongsToMany(

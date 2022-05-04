@@ -18,6 +18,22 @@ class LayoutRepository extends BaseRepository implements LayoutRepositoryInterfa
         return $this->model::FILE_PATH_LAYOUT;
     }
 
+    public function getTypeUserLayout()
+    {
+        return $this->model::TYPE_USER_LAYOUT;
+    }
+
+    public function getTypeView()
+    {
+        return $this->model::TYPE_USER_LAYOUT['view'];
+    }
+
+
+    public function getTypeLike()
+    {
+        return $this->model::TYPE_USER_LAYOUT['like'];
+    }
+
     public function storeCategoryLayout(object $layout, array $categories)
     {
         $layout->categories()->attach($categories);
