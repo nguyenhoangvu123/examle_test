@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\Category\CategoryApiController;
+use App\Http\Controllers\Layout\LayoutApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +26,14 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::put('/update/{id}', [CategoryApiController::class, 'update']);
         Route::delete('/delete/{id}', [CategoryApiController::class, 'delete']);
 
+    });
+
+    Route::group(['prefix' => 'layout'], function () {
+        Route::get('/', [LayoutApiController::class, 'index']);
+        Route::post('/store', [LayoutApiController::class, 'store']);
+        Route::get('/{id}', [LayoutApiController::class, 'show']);
+        Route::post('/update/{id}', [LayoutApiController::class, 'update']);
+        Route::delete('/delete/{id}', [LayoutApiController::class, 'delete']);
+        
     });
 });

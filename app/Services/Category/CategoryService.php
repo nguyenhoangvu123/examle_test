@@ -2,6 +2,7 @@
 
 namespace App\Services\Category;
 
+use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
 use App\Services\BaseService;
 use App\Repositories\Category\CategoryRepositoryInterface;
@@ -14,9 +15,9 @@ class CategoryService extends BaseService
         $this->categoryRepo = $categoryRepo;
     }
     
-    public function index() {
-        $categories = $this->categoryRepo->getAll();
-        return CategoryResource::collection($categories);
+    public function index($request) {
+        $categories = $this->categoryRepo->getAllCategory($request);
+        return new CategoryCollection($categories);
     }
 
     public function store($request)
