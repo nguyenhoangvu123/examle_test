@@ -5,9 +5,11 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Auth\AuthRepository;
 use App\Repositories\Layout\LayoutRepository;
+use App\Repositories\User\UserLayoutRepository;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Repositories\Layout\LayoutRepositoryInterface;
+use App\Repositories\User\UserLayoutRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 
 class RepositoryProvider extends ServiceProvider
@@ -35,6 +37,12 @@ class RepositoryProvider extends ServiceProvider
          $this->app->singleton(
             LayoutRepositoryInterface::class,
             LayoutRepository::class
+        );
+
+         // user //
+         $this->app->singleton(
+            UserLayoutRepositoryInterface::class,
+            UserLayoutRepository::class
         );
     }
 

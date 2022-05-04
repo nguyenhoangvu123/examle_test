@@ -7,17 +7,24 @@ use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\LayoutResource;
 use App\Http\Resources\LayoutCollection;
+use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Layout\LayoutRepositoryInterface;
+use App\Repositories\User\UserLayoutRepositoryInterface;
 
 class LayoutService extends BaseService
 {
     protected $layoutRepo;
-    public function __construct(LayoutRepositoryInterface $layoutRepo)
-    {
+    protected $userRepo;
+    public function __construct(
+        LayoutRepositoryInterface $layoutRepo,
+        UserLayoutRepositoryInterface $userRepo
+    ) {
         $this->layoutRepo = $layoutRepo;
+        $this->userRepo   = $userRepo;
     }
 
-    public function index($request) {
+    public function index($request)
+    {
         $limit = $request->limit;
         $layouts = $this->layoutRepo->getAllLayout($limit);
         return new LayoutCollection($layouts);
@@ -80,16 +87,37 @@ class LayoutService extends BaseService
                 "url"           => $url,
                 "name"          => $name
             ];
-            $this->layoutRepo->update($id,$datas);
+            $this->layoutRepo->update($id, $datas);
             $this->layoutRepo->updateCategoryLayout($layout, $categories);
             return true;
         });
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $layout = $this->layoutRepo->find($id);
         $this->layoutRepo->deleteCategoryLayout($layout);
         $layout->delete();
         return true;
     }
+
+    public function userViewAndLikeLayout($request)
+    {
+        $user = $request->user();
+        $layoutId = $request->layoutId;
+        $type = $request->type;
+        $typeView = $this->layoutRepo->getTypeView();
+        $typeLike = $this->layoutRepo->getTypeLike();
+        if ($type === $typeView) {
+            $type = $typeView; 
+        }else {
+            $type = $typeLike;
+        }
+        $userViewLayout = $this->userRepo->insertViewAndLikeLayout($user, $layoutId, $typeView);
+        return true;
+    }
+
+  
+
+    
 }

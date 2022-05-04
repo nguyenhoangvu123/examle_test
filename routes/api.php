@@ -18,7 +18,7 @@ use App\Http\Controllers\Layout\LayoutApiController;
 */
 Route::post('/login', [AuthApiController::class, 'login']);
 Route::group(['middleware' => 'auth:sanctum'], function(){  
-    // Category Strore //
+    // Category //
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', [CategoryApiController::class, 'index']);
         Route::post('/store', [CategoryApiController::class, 'store']);
@@ -27,13 +27,15 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::delete('/delete/{id}', [CategoryApiController::class, 'delete']);
 
     });
-
+    // Layout // 
     Route::group(['prefix' => 'layout'], function () {
         Route::get('/', [LayoutApiController::class, 'index']);
         Route::post('/store', [LayoutApiController::class, 'store']);
         Route::get('/{id}', [LayoutApiController::class, 'show']);
         Route::post('/update/{id}', [LayoutApiController::class, 'update']);
         Route::delete('/delete/{id}', [LayoutApiController::class, 'delete']);
-        
+        Route::post('/user-view-layout',[LayoutApiController::class, 'userViewAndLikeLayout']);
     });
+   
+   
 });

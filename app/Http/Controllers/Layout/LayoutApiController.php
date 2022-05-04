@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Layout;
 
 use Illuminate\Http\Request;
 use App\Services\Layout\LayoutService;
+use App\Http\Requests\User\UserViewLayout;
 use App\Http\Controllers\BaseApiController;
 use App\Http\Requests\Layout\StoreLayoutRequest;
 use App\Http\Requests\Layout\UpdateLayoutRequest;
@@ -77,6 +78,35 @@ class LayoutApiController extends BaseApiController
         try {
             return $this->sendDataSuccess(
                 $this->layoutService->delete($id)
+            );
+        } catch (\Exception $exception) {
+            $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
+            return $this->setMessage($exception
+                ->getMessage())
+                ->sendDataError('', $statusCode);
+        }
+    }
+
+    public function UserViewLayout(UserViewLayout $request) {
+       
+        try {
+            return $this->sendDataSuccess(
+                $this->layoutService->userViewAndLikeLayout($request)
+            );
+        } catch (\Exception $exception) {
+            $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
+            return $this->setMessage($exception
+                ->getMessage())
+                ->sendDataError('', $statusCode);
+        }
+    }
+
+    public function filedUserLayout()
+    {   
+        dd(123123);
+        try {
+            return $this->sendDataSuccess(
+                $this->layoutService->filedUserLayout()
             );
         } catch (\Exception $exception) {
             $statusCode =  $exception->getCode() === 0 ? 500 : $exception->getStatusCode();
